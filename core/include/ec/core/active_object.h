@@ -1,3 +1,6 @@
+#ifndef EC_CORE_ACTIVE_OBJECT_H_
+#define EC_CORE_ACTIVE_OBJECT_H_
+
 #include <atomic>
 #include <condition_variable>
 #include <functional>
@@ -7,7 +10,7 @@
 #include <thread>
 #include <type_traits>
 
-namespace ec {
+namespace ec::core {
 
 class ActiveObject {
 public:
@@ -44,38 +47,6 @@ private:
     std::thread thread_{&ActiveObject::run, this};
 };
 
-} // namespace ec
+} // namespace ec::core
 
-namespace {
-
-void free_function() {
-    std::cout << "Free function" << '\n';
-}
-
-struct CallableStruct {
-    void operator()() {
-        std::cout << "Callable struct" << '\n';
-    }
-};
-
-} // namespace
-
-int main() {
-    ec::ActiveObject ctx{};
-
-    ctx.call([] { std::cout << "Lambda" << '\n'; });
-    ctx.call(free_function);
-    ctx.call(CallableStruct{});
-
-    std::atomic<bool> done{false};
-    ctx.call([&] {
-        std::cout << "Done!" << '\n';
-        done.store(true);
-    });
-
-    while (!done.load()) {
-        using namespace std::chrono_literals;
-        std::cout << "Waiting..." << '\n';
-        std::this_thread::sleep_for(100ms);
-    }
-}
+#endif // EC_CORE_ACTIVE_OBJECT_H_
