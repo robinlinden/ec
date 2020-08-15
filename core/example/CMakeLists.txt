@@ -1,13 +1,8 @@
-add_executable(ec_core_active_object
-    src/active_object.cpp
-)
+function(add_example name file)
+    add_executable(${name} ${file})
+    target_compile_features(${name} PRIVATE cxx_std_20)
+    target_link_libraries(${name} PRIVATE ec::core)
+endfunction()
 
-target_compile_features(ec_core_active_object
-    PRIVATE
-        cxx_std_20
-)
-
-target_link_libraries(ec_core_active_object
-    PRIVATE
-        ec::core
-)
+add_example(ec_core_active_object src/active_object.cpp)
+add_example(ec_core_timer_service src/timer_service.cpp)
