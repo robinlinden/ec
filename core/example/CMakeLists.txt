@@ -5,4 +5,5 @@ function(add_example name file)
 endfunction()
 
 add_example(ec_core_active_object src/active_object.cpp)
+add_example(ec_core_event_service src/event_service.cpp)
 add_example(ec_core_timer_service src/timer_service.cpp)
