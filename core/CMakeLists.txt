@@ -13,9 +13,4 @@ target_compile_features(${PROJECT_NAME}
         cxx_std_20
 )
 
-target_compile_options(${PROJECT_NAME}
-    INTERFACE
-        -fconcepts
-)
-
 add_subdirectory(example)
