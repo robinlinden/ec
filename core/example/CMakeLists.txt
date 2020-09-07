@@ -1,7 +1,7 @@
 function(add_example name file)
     add_executable(${name} ${file})
     target_compile_features(${name} PRIVATE cxx_std_20)
-    target_link_libraries(${name} PRIVATE ec::core)
+    target_link_libraries(${name} PRIVATE ec::core ec::warning)
 endfunction()
 
 add_example(ec_core_active_object src/active_object.cpp)
