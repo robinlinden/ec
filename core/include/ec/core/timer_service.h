@@ -22,13 +22,15 @@ public:
         thread_.join();
     }
 
-    void call_after(std::chrono::milliseconds timeout, auto function) {
+    template<typename T>
+    void call_after(std::chrono::milliseconds timeout, T function) {
         std::unique_lock<std::mutex> lock{mutex_};
         jobs_.push(TimerJob{clock::now() + timeout, function});
         cv_.notify_one();
     }
 
-    void call_every(std::chrono::milliseconds timeout, auto function) {
+    template<typename T>
+    void call_every(std::chrono::milliseconds timeout, T function) {
         std::unique_lock<std::mutex> lock{mutex_};
         jobs_.push(TimerJob{clock::now() + timeout, function, timeout});
         cv_.notify_one();

@@ -20,7 +20,8 @@ public:
         thread_.join();
     }
 
-    void call(auto function) requires std::is_invocable_v<decltype(function)> {
+    template<typename T>
+    void call(T function) requires std::is_invocable_v<T> {
         std::scoped_lock<std::mutex> lock{mutex_};
         queued_callables_.emplace(function);
         cv_.notify_one();
