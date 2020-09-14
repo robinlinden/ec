@@ -10,4 +10,9 @@ target_compile_options(${PROJECT_NAME} INTERFACE
         -Werror;
         -Wextra;
     >
+    $<$<CXX_COMPILER_ID:MSVC>:
+        /W4;
+        /WX;
+        /permissive-;
+    >
 )
